@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <style type="text/css">
+        input {
+            height: 20px;
+            margin: 3px auto;
+        }
+    </style>
+    <script>
+        function sign() {
+
+            window.location.href = './index.html';
+
+        }
+
+
+
+        function infoConfirmed() {
+            var xmlhttp = new XMLHttpRequest();
+
+            var name = document.getElementById('name').value;
+            var pass = document.getElementById('pass').value;
+            var pass2 = document.getElementById('pass2').value;
+            var email = document.getElementById('email').value;
+            if(name == ''){
+                alert("账号为空");
+                return false;
+            }else  if(pass == ''){
+                alert("密码为空");
+                return false;
+            }else  if(pass2 != pass){
+                alert("两次密码不一致");
+                return false;
+            }
+
+            var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
+            if (reg.test(email)) {
+               
+            } else {
+                alert("邮箱格式不正确");
+                return false;
+            }
+
+
+
+
+                var obj = {
+                    name: name,
+                    pass: pass,
+                    email:email
+                };
+                xmlhttp.open("POST", "http://127.0.0.1:3000/user/sign", true);
+                xmlhttp.setRequestHeader("Content-Type"
+                    , "application/json");
+
+
+                xmlhttp.send(JSON.stringify(obj));  // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
+
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                        var json = JSON.parse(xmlhttp.responseText);
+                        if (json.status == 400)
+                            alert(json.data);
+                        else{
+                            alert("注册成功！");
+                            window.location.href = './index.html';
+                        }
+                        
+
+                    }
+                }
+
+            }
+    </script>
+</head>
+
+<body>
+    <h1>会员注册</h1>
+    <form>
+        登录名：<input type="text" id="name" />
+        <br />
+        密码：<input type="password" id="pass" />
+        <br />
+        确认密码：<input type="password" id="pass2" />
+        <br />
+        邮箱：<input type="email" id="email" />
+
+    </form>
+
+
+    <input type="submit" value="提交" onclick="infoConfirmed()" />
+    <input type="submit" value="返回" onclick="sign()" />
+</body>
+
+</html>

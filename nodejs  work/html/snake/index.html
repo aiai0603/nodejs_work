@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            border: 1px solid #aaa;
+        }
+
+        td {
+            width: 24px;
+            height: 24px;
+            color: red;
+            text-align: center;
+            border: 1px solid #aaa;
+        }
+    </style>
+</head>
+<body>
+  
+    <h3 id="score">分数：0</h3>
+    <div id="app"></div>
+
+ <button id="bt" onclick="go()">开始游戏</button>
+    <script src="./snake.js"></script>
+   
+    <script>
+        let game = new Game();
+
+		function go(){
+			game.start();
+    		game.bindEvent();
+		}
+    </script>
+</body>
+</html>

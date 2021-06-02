@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>游戏大厅</title>
+    <style type="text/css">
+
+    </style>
+    <script>
+
+
+
+    </script>
+</head>
+
+<body>
+    <div onclick="loginout()">
+        退出登录
+    </div>
+    <div onclick="change()">
+        修改信息
+    </div>
+    <h1>游戏大厅</h1>
+    <h3 id="user"></h3>
+    <table id="go">
+        <thead>
+            <td>
+                游戏
+            </td>
+            <td>
+                我的最高分
+            </td>
+            <td>
+                该游戏得分
+            </td>
+        </thead>
+
+    </table>
+
+    <h1>排行榜</h1>
+    <select id="select" onchange="func()">
+
+
+    </select>
+    <table id="rank">
+        <thead>
+            <td>
+                用户
+            </td>
+            <td>
+                分数
+            </td>
+            <td>
+                时间
+            </td>
+        </thead>
+
+    </table>
+
+
+    <h1>我的游戏记录</h1>
+    <div>
+        <table id="rc">
+
+
+        </table>
+     
+    </div>
+
+
+
+
+
+
+</body>
+<script src="js/jquery-3.5.0.min.js"></script>
+<script src="./js/time.js"></script>
+<script>
+    var mymax = [];
+    var allmax = [];
+    function loginout() {
+        document.cookie = ''
+        window.location.href = './index.html';
+    }
+
+
+
+
+    function func() {
+
+        var vs = $('select  option:selected').val();
+        console.log(vs)
+
+
+        var xmlhttp = new XMLHttpRequest();
+
+
+        xmlhttp.open("GET", "http://127.0.0.1:3000/record/rank/" + vs, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var rc = document.getElementById("rank");
+                var json = JSON.parse(xmlhttp.responseText);
+                var child = rc.childNodes;
+                for (var i = child.length - 1; i >= 0; i--) { // 一定要倒序，正序是删不干净的，可自行尝试
+                    rc.removeChild(child[i]);
+                }
+
+
+                if (json.status == 200) {
+
+                    var thead = document.createElement('thead');
+
+                    var td1 = document.createElement('td');
+                    td1.innerHTML = "用户"
+                    var td2 = document.createElement('td');
+                    td2.innerHTML = "得分"
+                    var td3 = document.createElement('td');
+                    td3.innerHTML = "时间"
+
+                    thead.appendChild(td1)
+                    thead.appendChild(td2)
+                    thead.appendChild(td3)
+                    rc.appendChild(thead)
+
+
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var tr = document.createElement('tr');
+
+                        var td1 = document.createElement('td');
+                        td1.innerHTML = json.data[i].name;
+                        var td2 = document.createElement('td');
+                        td2.innerHTML = json.data[i].score;
+                        var td3 = document.createElement('td');
+                        td3.innerHTML = crtTimeFtt(json.data[i].date);
+
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+
+
+                        rc.appendChild(tr)
+                    }
+
+
+                }
+                else {
+
+
+                }
+            }
+        }
+
+
+
+
+    }
+
+
+    function getCookie(name) {
+        var arr = document.cookie.split("; ");
+        console.log(arr)
+        for (var i = 0, len = arr.length; i < len; i++) {
+            var item = arr[i].split("=");
+            if (item[0] == name) {
+                return item[1];
+            }
+        }
+        return "";
+    }
+
+    window.onload = function () {
+
+        getName();
+
+        getMyMax();
+
+        getRecord();
+
+
+
+
+
+    }
+
+    function getMax() {
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", "http://127.0.0.1:3000/record/all/max", true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    allmax = json;
+                    getData()
+                }
+            }
+        }
+
+
+    }
+
+    function getMyMax() {
+
+
+        var xmlhttp = new XMLHttpRequest();
+        var name = parseInt(getCookie('name'));
+
+        xmlhttp.open("GET", "http://127.0.0.1:3000/record/max/" + name, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+
+                    mymax = json;
+                    getMax();
+                }
+                else {
+
+
+                }
+            }
+        }
+
+
+    }
+
+
+
+    function getName() {
+
+
+        var xmlhttp = new XMLHttpRequest();
+        var name = parseInt(getCookie('name'));
+        xmlhttp.open("GET", "http://127.0.0.1:3000/user/" + name, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    var us = document.getElementById("user");
+
+
+                    us.innerHTML = "欢迎你,用户:" + json.data[0].name
+
+                }
+                else {
+
+
+                }
+            }
+        }
+
+
+    }
+
+    function change() {
+
+        window.location.href = './change.html';
+
+    }
+
+    function getRecord() {
+
+
+        var xmlhttp = new XMLHttpRequest();
+        var name = parseInt(getCookie('name'));
+
+        xmlhttp.open("GET", "http://127.0.0.1:3000/record/" + name, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var rc = document.getElementById("rc");
+                var json = JSON.parse(xmlhttp.responseText);
+
+
+                if (json.status == 200) {
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var tr = document.createElement('tr');
+
+                        var td1 = document.createElement('td');
+                        td1.innerHTML = crtTimeFtt(json.data[i].date);
+                        var td2 = document.createElement('td');
+                        td2.innerHTML = json.data[i].name;
+                        var td3 = document.createElement('td');
+                        td3.innerHTML = json.data[i].score;
+
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+
+
+                        rc.appendChild(tr)
+                    }
+
+
+                }
+                else {
+
+
+                }
+            }
+        }
+
+
+    }
+
+
+    function crtTimeFtt(value) {
+        var crtTime = new Date(value);
+        return dateFtt("yyyy-MM-dd hh:mm", crtTime);
+    }
+    function getData() {
+
+
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", "http://127.0.0.1:3000/game", true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    var ob = document.getElementById('go');
+                    var se = document.getElementById('select');
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var tr = document.createElement('tr');
+
+                        var td1 = document.createElement('td');
+                        td1.innerHTML = json.data[i].name;
+                        (function () {
+                            var item = json.data[i];
+                            td1.onclick = function () {
+                                url(item);
+                            }
+                        })();
+                        var td2 = document.createElement('td');
+                        td2.innerHTML = mymax.data[i].max;
+                        var td3 = document.createElement('td');
+                        td3.innerHTML = allmax.data[i].max;
+
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        tr.appendChild(td3);
+
+
+                        ob.appendChild(tr)
+
+
+
+                        var opt = document.createElement('option');
+                        opt.value = json.data[i].id;
+                        opt.innerHTML = json.data[i].name;
+                        se.appendChild(opt)
+
+                    }
+                    func()
+
+
+
+
+                }
+                else {
+
+
+                }
+
+
+
+            }
+        }
+        function url(obj) {
+
+            location.href = obj.url;
+        };
+
+
+
+    }
+
+</script>
+
+</html>
