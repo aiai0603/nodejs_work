@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <title>用户</title>
+    <style type="text/css">
+        .pp {
+            margin-top: 10px;
+            display: flex;
+            flex-flow: row;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .pp>div {
+
+            margin: 5px;
+        }
+
+        .but {
+            width: 100px;
+            height: 30px;
+            background-color: transparent;
+            border: #fff 2px solid;
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            font-weight: 600;
+            margin: 0 10px;
+
+
+            color: #fff;
+
+            text-align: center;
+
+        }
+
+
+        h1 {
+            margin: 0 30px;
+        }
+
+
+
+        .main {
+            width: 100%;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+
+        }
+
+
+
+        .butunder {
+            display: flex;
+            flex-flow: row;
+        }
+
+
+        .card>img {
+            width: 130px;
+            height: 130px;
+            margin: 12px;
+
+        }
+
+
+        #img1 {
+            width: 150px;
+            height: 150px;
+            margin-right: 50px;
+
+        }
+
+        .card1 {
+           margin-left: 150px;
+
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+
+        .card {
+            font-size: 18px;
+            margin: 10px;
+            display: flex;
+            flex-flow: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left {
+
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .name {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .area {
+            height: 50px;
+            margin-top: 20px;
+            width: 60%;
+            border-bottom: #fff 2px solid;
+            font-weight: 600;
+            font-size: 28px;
+        }
+
+        .al {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            width: 55%;
+        }
+
+        .at {
+            display: flex;
+            flex-flow: column;
+            border-bottom: #fff 1px solid;
+            width: 100%;
+        }
+
+        .atitle {
+            font-weight: 600;
+            font-size: 20px;
+            margin: 15px 0;
+        }
+
+        .acontent {
+            text-indent: 2em;
+            width: 100%;
+            font-size: 18px;
+            line-height: 25px;
+            word-wrap: break-word;
+            margin-bottom: 20px;
+        }
+
+        .aun {
+            display: flex;
+            flex-flow: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .send {
+            width: 55%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: flex-start
+        }
+
+        .input {
+            width: 96%;
+            height: 100px;
+            background: transparent;
+            border: #fff 2px solid;
+            border-radius: 10px;
+            padding: 2%;
+            color: #fff;
+        }
+
+
+        #game {
+            width: 60%;
+            display: flex;
+            flex-flow: row;
+            flex-wrap: wrap;
+
+        }
+
+        .card {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <script src="js/http.js"></script>
+
+</head>
+
+<body
+    style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+    <div class="main">
+      
+        <div style="display: flex;flex-flow: row;justify-content: flex-start;width: 60%;margin-top: 50px;">
+            <div class="but" onclick="window.history.go(-1)">
+                返回
+            </div>
+            <div id="go">
+            </div>
+        </div>
+    </div>
+    <div class="area">
+        他的游戏
+    </div>
+    <div id="game">
+
+
+
+
+    </div>
+
+    <div class="area">
+        他的评论
+    </div>
+    <div class="al">
+        <div class="at">
+            <div class="atitle">
+                xxxx:
+            </div>
+            <div class="acontent">
+                xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxhhhhhhhhhhhhhhhhhhhhhhhhhhhhaaaaaaaaaaaaaa
+            </div>
+            <div class="aun">
+                <div> 2021-2-1 12:00:21 </div>
+                <div> 删除</div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="pp" style="margin-bottom: 50px;">
+        <div onclick="pre()">
+            上一页
+        </div>
+        <div id="page">
+            第0页/共0页
+        </div>
+        <div onclick="next()">
+            下一页
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+<script src="js/jquery-3.5.0.min.js"></script>
+<script src="./js/time.js"></script>
+<script>
+
+    var index = 0;
+    var page = 6;
+    var allpage = 0;
+    var max = []
+
+    function pre() {
+        if (index != 0) {
+            index--;
+            getAricle()
+        }
+    }
+
+    function getMyMax() {
+
+
+        var xmlhttp = new XMLHttpRequest();
+        var search = window.location.search;
+        var id = getSearchString('id', search);
+
+
+        xmlhttp.open("GET", myurl+"/record/max/" + id, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+
+                    max = json;
+                    getGame();
+                }
+                else {
+
+
+                }
+            }
+        }
+
+
+    }
+
+
+    function next() {
+        if (index != allpage - 1) {
+            index++;
+            getAricle()
+        }
+    }
+
+
+
+    function back() {
+
+        window.location.href = './select.html';
+    }
+
+
+    function getData() {
+        var search = window.location.search;
+        var id = getSearchString('id', search);
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", myurl+"/user/" + id, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    var ob = document.getElementById('go');
+
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var item = document.createElement("div")
+                        item.className = 'card1';
+                        var img = document.createElement("img")
+                        img.src = 'img/admin.jpg'
+                        img.id = "img1"
+                        var left = document.createElement("div")
+                        left.className = "class"
+
+                        var name = document.createElement("div")
+                        name.innerHTML = json.data[i].name;
+                        name.className = "name"
+
+                        var under = document.createElement('div');
+                        under.innerHTML = json.data[i].email
+
+                        left.appendChild(name)
+                        left.appendChild(under)
+                        item.appendChild(img)
+                        item.appendChild(left)
+                        ob.appendChild(item)
+
+                    }
+                }
+                else {
+
+                }
+            }
+        }
+    }
+
+
+    function getGame() {
+        var search = window.location.search;
+        var id = getSearchString('id', search);
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", myurl+"/game", true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+        /*  <div class="card">
+              <img src="" alt="" srcset="">
+                <div >
+                    《平台游戏》
+                </div>
+                <div >
+                    最高分：30
+                </div>
+            </div>*/
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    var gg = document.getElementById('game');
+
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var div = document.createElement("div")
+                        div.className = 'card';
+
+
+                        var img = document.createElement('img')
+                        img.src = json.data[i].src
+
+                        var t1 = document.createElement('div')
+                        t1.innerHTML = json.data[i].name
+
+                        var t2 = document.createElement('div')
+                        t2.innerHTML = "最高分："+(max.data[i].max? max.data[i].max:0)
+
+
+                        div.appendChild(img)
+                        div.appendChild(t1)
+                        div.appendChild(t2);
+
+                        gg.appendChild(div)
+
+                    }
+
+
+                }
+                else {
+
+                }
+            }
+        }
+    }
+
+    function url(obj) {
+
+        location.href = obj.url;
+    };
+
+
+
+    function getCookie(name) {
+        var arr = document.cookie.split("; ");
+
+        for (var i = 0, len = arr.length; i < len; i++) {
+            var item = arr[i].split("=");
+            if (item[0] == name) {
+                return item[1];
+            }
+        }
+        return "";
+    }
+
+    window.onload = function () {
+
+        getMyMax();
+        getAricle();
+        getData();
+    }
+
+    function getSearchString(key, Url) {
+        var str = Url;
+        str = str.substring(1, str.length); // 获取URL中?之后的字符（去掉第一位的问号）
+        // 以&分隔字符串，获得类似name=xiaoli这样的元素数组
+        var arr = str.split("&");
+        var obj = new Object();
+        // 将每一个数组元素以=分隔并赋给obj对象
+        for (var i = 0; i < arr.length; i++) {
+            var tmp_arr = arr[i].split("=");
+            obj[decodeURIComponent(tmp_arr[0])] = decodeURIComponent(tmp_arr[1]);
+        }
+        return obj[key];
+    }
+
+
+    function getAricle() {
+        var search = window.location.search;
+        var id = getSearchString('id', search);
+
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.open("GET", myurl+"/article/user/" + id + "?page=" + index + "&size=" + page, true);
+        xmlhttp.setRequestHeader("Content-Type"
+            , "application/json");
+
+        xmlhttp.send();
+
+
+        xmlhttp.onreadystatechange = function () {
+
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                var rc = document.getElementsByClassName("al")[0];
+
+
+
+                var child = rc.childNodes;
+                for (var i = child.length - 1; i >= 0; i--) { // 一定要倒序，正序是删不干净的，可自行尝试
+                    rc.removeChild(child[i]);
+                }
+                var json = JSON.parse(xmlhttp.responseText);
+
+                if (json.status == 200) {
+                    var pg = document.getElementById('page')
+
+                    allpage = Math.ceil((parseInt(json.all[0].sum) / parseInt(page)));
+                    pg.innerHTML = "第" + (index + 1) + "页/共" + allpage + "页"
+
+
+
+                    for (let i = 0; i < json.data.length; i++) {
+                        var at = document.createElement('div')
+                        at.className = "at";
+                        var atitle = document.createElement('div')
+                        atitle.className = "atitle"
+                        atitle.innerHTML = json.data[i].name + ' 对 《' + json.data[i].game + "》 评论："
+                        var acontent = document.createElement('div')
+                        acontent.className = "acontent"
+                        acontent.innerHTML = json.data[i].text
+                        var aun = document.createElement('div')
+                        aun.className = 'aun'
+
+                        var date = document.createElement('div')
+                        date.innerHTML = crtTimeFtt(json.data[i].date)
+
+                        var dele = document.createElement('div')
+
+
+                        dele.innerHTML = ''
+
+
+                        aun.appendChild(date)
+                        aun.appendChild(dele)
+
+                        at.appendChild(atitle)
+                        at.appendChild(acontent)
+                        at.appendChild(aun)
+
+                        rc.appendChild(at)
+                    }
+                }
+                else {
+
+
+                }
+
+            }
+        }
+
+
+    }
+
+
+    function crtTimeFtt(value) {
+        var crtTime = new Date(value);
+        return dateFtt("yyyy-MM-dd hh:mm", crtTime);
+    }
+
+</script>
+
+</html>

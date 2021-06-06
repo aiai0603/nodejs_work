@@ -7,6 +7,7 @@ require('./db/db.js');
 var userRouter = require('./controller/user.js');
 var gameRouter = require('./controller/game.js');
 var recordRouter = require('./controller/record.js');
+var articleRouter = require('./controller/article.js');
 
 
 //增加头部信息解决跨域问题
@@ -28,11 +29,10 @@ app.use(bodyParse.json());
 app.use('/user', userRouter);
 app.use('/game', gameRouter);
 app.use('/record', recordRouter);
+app.use('/article', articleRouter);
 
 
 
 // 监听3000端口
 var server=app.listen(3000);
 
-console.log("服务器已运行");
-console.log("监听网址为:http://127.0.0.1:3000/");

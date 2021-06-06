@@ -8,14 +8,16 @@ module.exports = {
             user.pass?user.pass:"",
             user.email?user.email:"",
             user.level?user.level:1
+
         ]
         
-        pool.query("INSERT INTO user (name,password,email,level) VALUES (?,?,?, ?);", sqlparam, function (error, result) {
+        pool.query("INSERT INTO user(name,password,email,level) VALUES (?,?,?, ?);", sqlparam, function (error, result) {
             if (error) throw error;
             callback(result);
         });
     },
-    
+
+
     queryOne: function(params, callback) { // users表中删除指定user操作
       
         let sqlparam = [params]

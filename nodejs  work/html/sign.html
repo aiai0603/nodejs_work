@@ -5,11 +5,67 @@
     <meta charset="UTF-8">
     <title>注册</title>
     <style type="text/css">
+        html,
+        body {
+            height: 90%;
+        }
+
+        .login {
+            width: 30%;
+            height: 70%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 0 10px #fff;
+        }
+
         input {
-            height: 20px;
-            margin: 3px auto;
+            background-color: transparent;
+            border: none;
+            border-bottom: white 1px solid;
+            width: 60%;
+            font-size: 20px;
+            color: #fff;
+            margin: 10px 0px 10px 20px;
+            padding-left: 10px;
+
+
+        }
+
+        .but {
+            width: 120px;
+            background-color: transparent;
+            border: #fff 2px solid;
+            height: 40px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size: 16px;
+
+            color: #fff;
+            margin: 20px 20px 0 20px;
+            text-align: center;
+
+        }
+
+        form {
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        form div {
+            text-align: right;
+            width: 70%;
         }
     </style>
+    <script src="js/http.js"></script>
     <script>
         function sign() {
 
@@ -26,20 +82,20 @@
             var pass = document.getElementById('pass').value;
             var pass2 = document.getElementById('pass2').value;
             var email = document.getElementById('email').value;
-            if(name == ''){
+            if (name == '') {
                 alert("账号为空");
                 return false;
-            }else  if(pass == ''){
+            } else if (pass == '') {
                 alert("密码为空");
                 return false;
-            }else  if(pass2 != pass){
+            } else if (pass2 != pass) {
                 alert("两次密码不一致");
                 return false;
             }
 
             var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
             if (reg.test(email)) {
-               
+
             } else {
                 alert("邮箱格式不正确");
                 return false;
@@ -48,53 +104,59 @@
 
 
 
-                var obj = {
-                    name: name,
-                    pass: pass,
-                    email:email
-                };
-                xmlhttp.open("POST", "http://127.0.0.1:3000/user/sign", true);
-                xmlhttp.setRequestHeader("Content-Type"
-                    , "application/json");
+            var obj = {
+                name: name,
+                pass: pass,
+                email: email
+            };
+            xmlhttp.open("POST", myurl+"/user/sign/new", true);
+            xmlhttp.setRequestHeader("Content-Type"
+                , "application/json");
 
 
-                xmlhttp.send(JSON.stringify(obj));  // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
+            xmlhttp.send(JSON.stringify(obj));  // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
 
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
-                        var json = JSON.parse(xmlhttp.responseText);
-                        if (json.status == 400)
-                            alert(json.data);
-                        else{
-                            alert("注册成功！");
-                            window.location.href = './index.html';
-                        }
-                        
-
+                    var json = JSON.parse(xmlhttp.responseText);
+                    if (json.status == 400)
+                        alert(json.data);
+                    else if(json.status == 200){
+                        alert("注册成功！");
+                        window.location.href = './index.html';
                     }
-                }
 
+
+                }
             }
+
+        }
     </script>
 </head>
 
-<body>
-    <h1>会员注册</h1>
-    <form>
-        登录名：<input type="text" id="name" />
-        <br />
-        密码：<input type="password" id="pass" />
-        <br />
-        确认密码：<input type="password" id="pass2" />
-        <br />
-        邮箱：<input type="email" id="email" />
-
-    </form>
+<body
+    style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+    <div class="login">
+        <h1>会员注册</h1>
+        <form>
+            <div> 登录名<input type="text" id="name" /> </div>
+            <div> 密码<input type="password" id="pass" /> </div>
+            <div> 确认密码<input type="password" id="pass2" /> </div>
+            <div> 邮箱<input type="email" id="email" /> </div>
 
 
-    <input type="submit" value="提交" onclick="infoConfirmed()" />
-    <input type="submit" value="返回" onclick="sign()" />
+
+
+        </form>
+
+        <div style="margin-top: 20px;">
+            <input type="submit" value="提交" onclick="infoConfirmed()" class="but"/>
+            <input type="submit" value="返回" onclick="sign()"  class="but"/>
+        </div>
+
+    </div>
+
 </body>
 
 </html>

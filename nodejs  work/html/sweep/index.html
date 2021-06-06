@@ -1,27 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
- 
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>Document</title>
- <link rel="stylesheet" href="css/index.css" >
-</head>
- 
-<body>
- <div class="main">
-  <header class="header">
-  
- 
-  </header>
-  <div class="gameBox" id="gameBox"></div>
-  <footer class="footer">剩余雷数量：<span id="surplusMine"></span>
-  <footer class="footer">当前得分：<span id="score"></span>
 
-  </footer>
- </div>
- <button>游戏开始</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+  
+</head>
+
+<body
+    style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+
+    <div class="main">
+        <footer class="footer">剩余雷数量：<span id="surplusMine">10</span> </footer>
+        <footer class="footer">当前得分：<span id="score"></span> </footer>
+        <header class="header">
+
+
+        </header>
+        <div class="gameBox" id="gameBox"></div>
+
+
+
+      
+
+
+
+    </div>
+    <div class="rule">
+        <div class="rule-card">
+            <div class="rule-title">
+                游戏规则
+            </div>
+            <div class="rule-word">
+                使用 鼠标 进行操作;<br>
+                鼠标左键点击棋盘中的方块，相连的没有地雷的区块将揭开;如果区块周围有地雷，地雷的数量将以数字表述
+                ; 鼠标右键可以标记某个区块为地雷，将所有地雷标记则游戏通关
+                <br>
+                如果点击地雷或者标记用完没有找出所有地雷，游戏结束
+            </div>
+
+            <div class="buts">
+                <div class="but" onclick="start()">
+                    开始游戏
+                </div>
+                <div class="but" onclick="back()">
+                    返回首页
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </body>
+<script src="../js/http.js"></script>
 <script src="js/index.js"></script>
- 
+
 </html>

@@ -5,7 +5,7 @@
 }
 #header .title1{
 	font: bold 50px Arial;
-	color:#776e65;
+	
 	margin:0 auto;
 }
 
@@ -22,7 +22,7 @@
 	margin:0 auto;
 }
 #header .score-wrapper{
-	width:100px;
+	width:150px;
 	background-color:#8f7a66;
 	padding:6px;
 	border-radius:6px;
@@ -74,4 +74,72 @@
 	font:bold 50px Arial;
 	text-align:center;
 	line-height:100px;
+}
+
+
+html,body{
+	width: 99%;
+   height: 99%;
+}
+
+.rule{
+ width: 100%;
+ height: 100%;
+ background-color: rgba(0,0,0,0.6);
+ position: fixed;
+ z-index: 10;
+ display: flex;
+ flex-flow: row;
+ justify-content: center;
+ align-items: center;
+
+}
+
+.rule-card{
+ width: 60%;
+ height: 60%;
+ z-index: 12;
+}
+
+.rule-title{
+ font-size: 50px;
+ font-weight: 600;
+ color: white;
+ z-index: 13;
+}
+
+.rule-word{
+ margin-top: 50px;
+ font-size: 20px;
+line-height: 30px;
+ color: white;
+ z-index: 13;
+}
+
+
+.buts{
+ display: flex;
+ flex-flow: row;
+ justify-content: flex-start
+}
+
+.but {
+ width: 200px;
+ height: 40px;
+ background-color: transparent;
+ border: #fff 2px solid;
+ display: flex;
+ font-size: 22px;
+ flex-flow: row;
+ justify-content: center;
+ align-items: center;
+ border-radius: 10px;
+ font-weight: 600;
+ margin: 30px 10px 0 0;
+
+
+ color: #fff;
+
+ text-align: center;
+
 }

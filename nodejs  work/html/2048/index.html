@@ -1,27 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no"/>
+	<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no" />
 	<title>Document</title>
 	<link rel="stylesheet" href="css/style1.css">
 	<script src="js/jquery-3.5.0.min.js"></script>
 	<script src="js/common1.js"></script>
 	<script src="js/animation1.js"></script>
 	<script src="js/main1.js"></script>
+	<script src="../js/http.js"></script>
 </head>
 
-<body>
+<body
+	style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+
+
+	<div class="rule">
+		<div class="rule-card">
+			<div class="rule-title">
+				游戏规则
+			</div>
+			<div class="rule-word">
+				使用 上 下 左 右 进行操作;<br>
+				将棋盘上所有的数字向一个方向移动至底部，相同的数字将进行叠加
+				<br> 当不能再进行移动时，游戏结束
+			</div>
+
+			<div class="buts">
+				<div class="but" onclick="start()">
+					开始游戏
+				</div>
+				<div class="but" onclick="back()">
+					返回首页
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+
+
 	<div id="header">
 		<h1 class="title1">2048</h1>
-		
-	
+
+
 		<div class="wrapper">
 			<div class="score-wrapper">
 				<span id="txt">score:</span>
 				<span id="score">0</span>
 			</div>
-		
+
 		</div>
 	</div>
 	<div id="grid-container">
@@ -46,5 +77,6 @@
 		<div class="grid-cell" id="grid-cell-3-3"></div>
 	</div>
 </body>
+
 </html>
 <script></script>

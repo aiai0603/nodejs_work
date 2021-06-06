@@ -14,7 +14,6 @@ router.post('/:id', function (req, res, next) {
                 data: '账号已经被用过了哦'
             });
         } else {
-
             
             update(urlParam, function (success) {
                 if (success == null) {
@@ -83,8 +82,10 @@ router.get('/:id', function (req, res, next) {
 
 
 
-router.post('/sign', function (req, res, next) {
+router.post('/sign/new', function (req, res, next) {
     let urlParam = req.body;
+   console.log(urlParam)
+
     findByName(urlParam, function (success) {
         if (success != null) {
             res.json({
@@ -93,7 +94,7 @@ router.post('/sign', function (req, res, next) {
             });
         } else {
 
-            
+           
             add(urlParam, function (success) {
                 if (success == null) {
                     res.json({
@@ -106,12 +107,9 @@ router.post('/sign', function (req, res, next) {
                         data: success
                     });
                 }
-
             })
         }
-
     })
-
 });
 
 

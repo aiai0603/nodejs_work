@@ -22,3 +22,75 @@
 .won .player {
   box-shadow: -4px -7px 8px white, 4px -7px 8px white;
 }
+
+#live,#level{
+  font-size: 30px;
+ margin: 20px;
+}
+
+html,body{
+     width: 99%;
+    height: 99%;
+}
+
+.rule{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  position: fixed;
+  z-index: 10;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.rule-card{
+  width: 60%;
+  height: 60%;
+  z-index: 12;
+}
+
+.rule-title{
+  font-size: 50px;
+  font-weight: 600;
+  color: white;
+  z-index: 13;
+}
+
+.rule-word{
+  margin-top: 50px;
+  font-size: 20px;
+ line-height: 30px;
+  color: white;
+  z-index: 13;
+}
+
+
+.buts{
+  display: flex;
+  flex-flow: row;
+  justify-content: flex-start
+}
+
+.but {
+  width: 200px;
+  height: 40px;
+  background-color: transparent;
+  border: #fff 2px solid;
+  display: flex;
+  font-size: 22px;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  font-weight: 600;
+  margin: 30px 10px 0 0;
+
+
+  color: #fff;
+
+  text-align: center;
+
+}

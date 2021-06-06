@@ -7,9 +7,16 @@ var starty=0;
 var endx=0;
 var endy=0;
 
-$(document).ready(function(){
-	newgame();
-});
+
+function start(){
+    document.getElementsByClassName('rule')[0].style.display = 'none'
+    newgame();
+  }
+ 
+
+
+
+
 
 //开始新游戏
 function newgame(){
@@ -360,6 +367,10 @@ function moveDown(){
 }
 
 
+function back(){
+	window.location.href = '../select.html';
+  }
+  
 
 function infoConfirmed() {
 	var xmlhttp = new XMLHttpRequest();
@@ -367,11 +378,11 @@ function infoConfirmed() {
 	
 	var obj = {
 	  userid: parseInt(userid),
-	  gameid: 2,
+	  gameid: "2048",
 	  score: parseInt(score),
 	};
   
-	xmlhttp.open("POST", "http://127.0.0.1:3000/record", true);
+	xmlhttp.open("POST", myurl+"/record", true);
 	xmlhttp.setRequestHeader("Content-Type"
 	  , "application/json");
   
@@ -380,7 +391,7 @@ function infoConfirmed() {
   
 	xmlhttp.onreadystatechange = function () {
 	  if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-  
+		window.location.href = '../select.html';
 		var json = JSON.parse(xmlhttp.responseText);
 		if (json.status == 400)
 		  alert(json.data);

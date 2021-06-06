@@ -1,16 +1,54 @@
-<!doctype html>
-<script src="code/chapter/15_game.js"></script>
-<script src="code/game_levels.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<script src="js/chapter/15_game.js"></script>
+<script src="js/game_levels.js"></script>
 
 <link rel="stylesheet" href="css/game.css">
+<script src="../js/http.js"></script>
 
-<body>
-  <html>
-      <div id="live">剩余生命：3</div>
-      <div id="level">关卡数：0</div>
+<body
+  style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
 
-  </html>
-  <script>
-    runGame(GAME_LEVELS, DOMDisplay);
-  </script>
+  <div style="display: flex;">
+    <div id="live">剩余生命：3</div>
+    <div id="level">关卡数：0</div>
+
+  </div>
+
+  <div class="rule">
+    <div class="rule-card">
+      <div class="rule-title">
+        游戏规则
+      </div>
+      <div class="rule-word">
+        使用 上 下 左 右 进行操作;<br>
+        本游戏共有6个关卡，在每个关卡中，拾取全部金币则通关，落入岩浆则失去一条生命
+       <br> 当额外生命归0，玩家再次死亡时，游戏结束
+      </div>
+
+      <div class="buts">
+          <div  class="but" onclick="start()">
+              开始游戏
+          </div>
+          <div  class="but" onclick="back()">
+              返回首页
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
 </body>
+<script>
+
+  function start(){
+    document.getElementsByClassName('rule')[0].style.display = 'none'
+    runGame(GAME_LEVELS, DOMDisplay);
+  }
+ 
+</script>
+</html>

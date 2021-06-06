@@ -10,7 +10,7 @@ module.exports = {
       record.date ? record.date : new Date()
     ]
 
-    pool.query("INSERT INTO record(userid,gameid,score,date) VALUES (?,?,?,?);", sqlparam, function (error, result) {
+    pool.query("INSERT INTO record(userid,gameid,score,date) VALUES (?,(select id from game where name = ?),?,?);", sqlparam, function (error, result) {
       if (error) throw error;
       callback(result);
     });
@@ -19,7 +19,7 @@ module.exports = {
 
   queryAll: function (id,page,size, callback) { 
 
-    let sqlparam = [id,page*size,(page+1)*size]
+    let sqlparam = [id,page*size, parseInt( size)]
 
     pool.query("SELECT a.id,a.score,a.date,b.name FROM record as a,game as b WHERE a.userid = ? AND a.gameid = b.id ORDER BY a.date DESC limit ?,?", sqlparam, function (error, result) {
       if (error) throw error;
@@ -49,6 +49,18 @@ module.exports = {
     
   },
 
+
+  countAll: function (id, callback) { 
+
+    
+    let sqlparam = [id]
+    pool.query("SELECT count (*) as sum from record where userid = ?", sqlparam, function (error, result) {
+      if (error) throw error;
+      callback(result);
+    });
+    
+  },
+
   queryAllMaxById: function (id, callback) { // users表中增加user操作
 
     let sqlparam = [id]
@@ -58,7 +70,6 @@ module.exports = {
       callback(result);
     });
   },
-
 
  
 

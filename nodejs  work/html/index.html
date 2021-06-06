@@ -5,19 +5,63 @@
     <meta charset="UTF-8">
     <title>登录</title>
     <style type="text/css">
-        input {
-            height: 20px;
-            margin: 3px auto;
-        }
+        html,body{height:90%;}
 
-        select {
-            height: 20px;
-            margin: 3px auto;
+        .login{
+            width: 30% ;
+            height: 50%;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            box-shadow: 0 0 10px #fff; 
         }
+        input{
+            background-color: transparent;
+            border: none;
+            border-bottom: white 1px solid;
+            width: 50%;
+            font-size: 20px;
+            color: #fff;
+            margin: 10px 0;
+            padding-left: 10px;
+
+           
+        }
+        .but{
+            width: 120px;
+            background-color: transparent;
+            border: #fff 2px solid;
+            height: 40px;
+            border-radius: 5px;
+            font-weight: 600;
+            margin-top: 20px;
+            font-size:16px;
+            
+            color: #fff;
+            margin: 20px 20px 0 20px;
+            text-align: center;
+           
+        }
+        form{
+            width: 100%;
+            font-size: 20px;
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+        }  
+        form div{
+            text-align: center;
+            width: 100%;
+        }     
     </style>
+    <script src="js/http.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script>
-       
+
         function sign() {
 
             window.location.href = './sign.html';
@@ -35,13 +79,13 @@
                 name: name,
                 pass: pass
             };
-            xmlhttp.open("POST", "http://127.0.0.1:3000/user", true);
+            xmlhttp.open("POST", myurl+"/user", true);
             xmlhttp.setRequestHeader("Content-Type"
                 , "application/json");
 
 
             xmlhttp.send(JSON.stringify(obj));  // 要发送的参数，要转化为json字符串发送给后端，后端就会接受到json对象
-         
+
             xmlhttp.onreadystatechange = function () {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
@@ -50,12 +94,12 @@
                         alert(json.data);
                     else {
                         alert("登陆成功！");
-                      
-                     
-                        Cookies.set('name', json.data.id);  
-   
-                       
-                         window.location.href='./select.html';
+
+
+                        Cookies.set('name', json.data.id);
+
+
+                        window.location.href = './select.html';
                     }
 
 
@@ -78,17 +122,24 @@
     </script>
 </head>
 
-<body>
-    <h1>会员登录</h1>
-    <form>
-        登录名：<input type="text" id="name" />
-        <br />
-        密码：<input type="password" id="pass" />
-    </form>
+<body style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+    <div class="login">
+        <h1 style="margin-top:0;">会员登录</h1>
+        <form>
+            <div>  账号 <input type="text" id="name" /> </div>
+            <div>  密码 <input type="password" id="pass" /> </div>
+           
+         
+        </form>
 
+          
+        <div>
+            <input type="submit" value="提交" onclick="infoConfirmed()" class="but"/>
+            <input type="submit" value="注册" onclick="sign()" class="but"/>
+        </div>
+       
+    </div>
 
-    <input type="submit" value="提交" onclick="infoConfirmed()" />
-    <input type="submit" value="注册" onclick="sign()" />
 </body>
 
 </html>

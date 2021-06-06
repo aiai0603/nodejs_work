@@ -138,7 +138,7 @@ function IsGameOver(){
 		alert('Game Over!');
 	
 		infoConfirmed(score)
-        window.location.href = '../select.html';
+      
 	}
 }
 

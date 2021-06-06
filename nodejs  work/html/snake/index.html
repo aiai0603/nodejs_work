@@ -1,40 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>贪吃蛇</title>
-    <style>
-        table {
-            border-collapse: collapse;
-            border: 1px solid #aaa;
-        }
-
-        td {
-            width: 24px;
-            height: 24px;
-            color: red;
-            text-align: center;
-            border: 1px solid #aaa;
-        }
-    </style>
-</head>
-<body>
   
+
+</head>
+<link rel="stylesheet" href="css/snake.css">
+
+<body
+    style="background-color: rgba(0, 0, 0, 0.87);color: white;display: flex;flex-flow: column;justify-content: center;align-items: center;">
+
     <h3 id="score">分数：0</h3>
     <div id="app"></div>
 
- <button id="bt" onclick="go()">开始游戏</button>
-    <script src="./snake.js"></script>
-   
+    <div class="rule">
+        <div class="rule-card">
+            <div class="rule-title">
+                游戏规则
+            </div>
+            <div class="rule-word">
+                使用 上 下 左 右 进行操作;<br>
+                控制贪吃蛇移动吃到地图上的❤，每次吃到一个❤贪吃蛇都会变长
+                <br> 贪吃蛇撞到自身或者撞到地图边缘时，游戏结束
+            </div>
+
+            <div class="buts">
+                <div class="but" onclick="start()">
+                    开始游戏
+                </div>
+                <div class="but" onclick="back()">
+                    返回首页
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="../js/http.js"></script>
+    <script src="js/snake.js"></script>
+
     <script>
         let game = new Game();
 
-		function go(){
-			game.start();
-    		game.bindEvent();
-		}
+        function go() {
+            game.start();
+            game.bindEvent();
+        }
     </script>
 </body>
+
 </html>

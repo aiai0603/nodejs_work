@@ -1,3 +1,10 @@
+function start(){
+    document.getElementsByClassName('rule')[0].style.display = 'none'
+   
+  }
+ 
+
+
 score = 1;
 function Game(tr, td, mineNum) {
     this.td = td;
@@ -13,6 +20,9 @@ function Game(tr, td, mineNum) {
     this.footerNum = document.getElementById("surplusMine"); //剩余炸弹数量显示框
 
 }
+
+
+
 
 Game.prototype.creatDom = function () { //创建游戏区域，在玩家第一次点击游戏区域的时候执行
     this.table.oncontextmenu = function () { return false }; //清除默认右键单机事件
@@ -224,7 +234,7 @@ Game.prototype.gameOver = function (target, code) { //游戏结束，code为触�
     infoConfirmed(score)
 
    
-    window.location.href = '../select.html';
+   
 
 
     
@@ -243,8 +253,7 @@ Game.prototype.gameWin = function (code) { //游戏胜利
     infoConfirmed(score)
 
    
-    window.location.href = '../select.html';
-
+  
 
 }
 
@@ -294,20 +303,11 @@ function addEvent(elem, type, handle) { //添加事件函数
     }
 }
 
-Game.prototype.setDegree = function () { //调整难度
-    var button = document.getElementsByTagName("button");
-
-    addEvent(button[0], "click", function () { //简单
-        var game = new Game(10, 10, 10);
-        game.creatDom();
-        game.play();
-        game.tablePos();
-    });
 
 
-
-
-}
+function back(){
+    window.location.href = '../select.html';
+  }
 
 
 
@@ -318,11 +318,11 @@ function infoConfirmed(score) {
 
     var obj = {
         userid: parseInt(userid),
-        gameid: 5,
+        gameid: "扫雷",
         score: parseInt(score),
     };
 
-    xmlhttp.open("POST", "http://127.0.0.1:3000/record", true);
+    xmlhttp.open("POST", myurl+"/record", true);
     xmlhttp.setRequestHeader("Content-Type"
         , "application/json");
 
@@ -331,6 +331,7 @@ function infoConfirmed(score) {
 
     xmlhttp.onreadystatechange = function () {
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+            window.location.href = '../select.html';
 
             var json = JSON.parse(xmlhttp.responseText);
             if (json.status == 400)
@@ -362,4 +363,3 @@ var game = new Game(10, 10, 10);
 game.creatDom();
 game.play();
 game.tablePos();
-game.setDegree()
